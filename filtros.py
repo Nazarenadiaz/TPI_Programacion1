@@ -11,7 +11,7 @@ def filtrar_por_continente(paises):
     continente = input("Ingresa el continente: ").strip()
 
     if not continente:
-        print("[ERROR] El continente no puede estar vacio.")
+        print("ERROR, El continente no puede estar vacio.")
         return
 
     resultados = []
@@ -40,11 +40,11 @@ def filtrar_por_poblacion(paises):
         maximo = int(input("Poblacion maxima: ").strip())
 
     except ValueError:
-        print("[ERROR] Debes ingresar numeros enteros.")
+        print("ERROR, Debes ingresar numeros enteros.")
         return
 
     if minimo > maximo:
-        print("[ERROR] El valor minimo no puede ser mayor al maximo.")
+        print("ERROR, El valor minimo no puede ser mayor al maximo.")
         return
 
     resultados = [
@@ -80,11 +80,11 @@ def filtrar_por_superficie(paises):
         maximo = int(input("Superficie maxima (km²): ").strip())
 
     except ValueError:
-        print("[ERROR] Debes ingresar numeros enteros.")
+        print("ERROR, Debes ingresar numeros enteros.")
         return
 
     if minimo > maximo:
-        print("[ERROR], El valor minimo no puede ser mayor al maximo.")
+        print("ERROR, El valor minimo no puede ser mayor al maximo.")
         return
 
     resultados = [
