@@ -1,15 +1,15 @@
 def buscar_pais(paises):
     """
-    Busca países cuyo nombre contenga el texto ingresado
-    por el usuario, sin distinguir mayúsculas y minúsculas.
+    Busca paises cuyo nombre contenga el texto ingresado
+    por el usuario, sin distinguir mayusculas y minusculas.
     """
 
-    print("\n-Buscar país por nombre-")
+    print("\n-Buscar pais por nombre-")
 
-    termino = input("Ingresá el nombre o parte del nombre: ").strip()
+    termino = input("Ingrese el nombre o parte del nombre: ").strip()
 
     if not termino:
-        print("[ERROR] Debés ingresar al menos un carácter.")
+        print("ERROR, Debes ingresar al menos un caracter.")
         return
 
     resultados = []
@@ -19,7 +19,7 @@ def buscar_pais(paises):
             resultados.append(pais)
 
     if not resultados:
-        print(f"\nNo se encontraron países que coincidan con '{termino}'.")
+        print(f"\nNo se encontraron paises que coincidan con '{termino}'.")
         return
 
     print(f"\nSe encontraron {len(resultados)} resultado(s):")
@@ -28,16 +28,16 @@ def buscar_pais(paises):
 
 def mostrar_paises(lista):
     """
-    Muestra una lista de países en formato de tabla.
+    Muestra una lista de paises en formato de tabla.
     """
 
     if not lista:
-        print("\nNo hay países para mostrar.")
+        print("\nNo hay paises para mostrar.")
         return
 
     print(
         f"\n{'Nombre':<20}"
-        f"{'Población':>15}"
+        f"{'Poblacion':>15}"
         f"{'Superficie (km²)':>18}"
         f"{'Continente':<15}"
     )
