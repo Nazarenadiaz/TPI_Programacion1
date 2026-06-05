@@ -1,7 +1,10 @@
 import csv
 import os
 
-RUTA_CSV = "paises.csv"
+# La ruta del CSV se calcula a partir de la ubicacion de este archivo
+# para que el programa funcione sin depender del directorio de trabajo.
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RUTA_CSV = os.path.join(BASE_DIR, "data", "paises.csv")
 
 
 def cargar_paises(ruta=RUTA_CSV):
