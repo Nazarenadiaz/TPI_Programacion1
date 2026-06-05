@@ -56,8 +56,8 @@ Menú principal (`python src/main.py`):
 
 ## Integrantes
 
-- **Estudiante A:** *pendiente*
-- **Estudiante B:** *pendiente*
+- **Estudiante A:** Herrera Marcos Ezequiel
+- **Estudiante B:** Acosta Diaz Milagros Nazarena
 
 ## Enlaces de la entrega
 
