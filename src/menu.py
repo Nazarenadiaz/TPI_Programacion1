@@ -1,4 +1,4 @@
-from csv_manager import agregar_pais
+from paises import agregar_pais, actualizar_pais
 from busquedas import buscar_pais
 from filtros import (
     filtrar_por_continente,
@@ -58,7 +58,7 @@ def ejecutar_opcion(opcion, paises):
         filtrar_por_superficie(paises)
 
     elif opcion == "6":
-        print("\nMODULO PENDIENTE,Actualizar pais.")
+        paises = actualizar_pais(paises)
 
     elif opcion == "7":
         print("\nMODULO PENDIENTE, Ordenar paises.")

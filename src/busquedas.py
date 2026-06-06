@@ -1,3 +1,6 @@
+from paises import mostrar_paises
+
+
 def buscar_pais(paises):
     """
     Busca paises cuyo nombre contenga el texto ingresado
@@ -24,32 +27,3 @@ def buscar_pais(paises):
 
     print(f"\nSe encontraron {len(resultados)} resultado(s):")
     mostrar_paises(resultados)
-
-
-def mostrar_paises(lista):
-    """
-    Muestra una lista de paises en formato de tabla.
-    """
-
-    if not lista:
-        print("\nNo hay paises para mostrar.")
-        return
-
-    print(
-        f"\n{'Nombre':<20}"
-        f"{'Poblacion':>15}"
-        f"{'Superficie (km²)':>18}"
-        f"{'Continente':<15}"
-    )
-
-    print("-" * 72)
-
-    for pais in lista:
-        print(
-            f"{pais['nombre']:<20}"
-            f"{pais['poblacion']:>15,}"
-            f"{pais['superficie']:>18,}"
-            f"{pais['continente']:<15}"
-        )
-
-    print()

@@ -1,4 +1,4 @@
-from busquedas import mostrar_paises
+from paises import mostrar_paises
 
 
 def filtrar_por_continente(paises):
