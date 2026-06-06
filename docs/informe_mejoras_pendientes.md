@@ -114,6 +114,86 @@
 - **Rama futura:** **no se aborda**. Documentado solo para mencionarlo en el informe PDF como decisión consciente ("se prioriza simplicidad sobre rendimiento, dataset pequeño").
 - **Cómo explicarlo:** "Lo dejamos así a propósito: para el tamaño del CSV es perfectamente aceptable y mantiene el código simple."
 
+## 11. Textos hardcodeados en `main.py` y `menu.py`
+
+> Observación añadida durante la rama `feature/menu-and-flow` (Paso 2).
+
+- **Módulos afectados:** `src/main.py`, `src/menu.py` (y, por contagio, los prefijos de mensaje también aparecen en `src/csv_utils.py`, `src/busquedas.py` y `src/filtros.py`).
+
+### 11.1 Inventario de textos hardcodeados
+
+**En `src/main.py`:**
+- `"Cargando datos..."`
+- `"ADVERTENCIA: No se cargaron paises. Verifica el archivo paises.csv."`
+
+**En `src/menu.py`:**
+- Separador visual: `"=" * 45`.
+- Título del menú: `"      GESTION DE DATOS DE PAISES"`.
+- Las 9 líneas de opciones: `"1. Agregar pais"`, `"2. Buscar pais por nombre"`, …, `"0. Salir"`.
+- Prompt de entrada: `"Elegi una opcion: "`.
+- Mensajes de placeholder:
+  - `"\nMODULO PENDIENTE,Actualizar pais."`  *(coma sin espacio)*
+  - `"\nMODULO PENDIENTE, Ordenar paises."`  *(coma con espacio)*
+  - `"\nMODULO PENDIENTE, Ver estadisticas."`
+- Mensaje de cierre: `"\nPrograma finalizado."`.
+- Error de opción inválida: `"ERROR,Opcion invalida."`.
+
+### 11.2 Qué es aceptable mantener inline
+
+La **mayoría** de estos textos pueden quedarse donde están. Extraerlos a constantes sería overengineering para Programación 1.
+
+- **Los textos de las 9 opciones del menú**: son el cuerpo de `mostrar_menu()`. Mover cada línea a una constante (`OPCION_1 = "1. Agregar pais"`, etc.) **agrega indirección sin reducir duplicación**: cada string aparece exactamente una vez.
+- **`"Cargando datos..."`, `"Programa finalizado."`, `"Elegi una opcion: "`, `"      GESTION DE DATOS DE PAISES"`, el separador `"=" * 45`**: cada uno se usa **una sola vez**. Tenerlos a la vista hace que `main.py` y `menu.py` se lean de arriba a abajo sin saltar a otro archivo.
+- **El ancho 45 del separador**: se repite dos veces dentro de `mostrar_menu`. Lo correcto sería usar una variable local si molesta, no una constante de módulo.
+
+Resumen: para un proyecto de Programación 1 con un solo idioma, sin tests automáticos y con un menú estático, **inline es la decisión correcta**.
+
+### 11.3 Qué sí podría centralizarse más adelante
+
+Lo único que sí tiene valor extraer son los **prefijos de mensajes del sistema**, porque se repiten en todos los módulos y hoy son inconsistentes:
+
+- `"ERROR,"` — sin espacio después de la coma. Aparece en `menu.py`, `csv_utils.py`, `busquedas.py`, `filtros.py`.
+- `"ADVERTENCIA:"` y `"ADVERTENCIA,"` — conviven dos formas (en `main.py` se usa `:`, en `csv_utils.py` se usa `,`).
+- `"OK,"` — usado en `csv_utils.py`.
+- `"MODULO PENDIENTE,"` vs `"MODULO PENDIENTE, "` — con y sin espacio en `menu.py`.
+
+Estas inconsistencias son visibles en el video y la rúbrica valora claridad de mensajes (II.7 Manejo de errores, II.6 Legibilidad).
+
+### 11.4 Por qué extraer todo sería overengineering
+
+- Introduce un módulo `mensajes.py` o `textos.py` que para un TP académico **no aporta valor**: no hay traducciones, no hay tests, no hay reuso real.
+- Obliga a saltar a otro archivo para entender qué imprime cada función.
+- Aumenta la cantidad de imports y el costo de explicar el código en el video.
+- Va en contra de la convención del plan: *"Prefiere soluciones simples a soluciones inteligentes"*.
+- El equipo tendría que justificar en el informe PDF una capa que la rúbrica no pide.
+
+### 11.5 Recomendación
+
+**No crear módulo de mensajes.** En lugar de eso, en una rama futura, hacer una **pasada chica de unificación de prefijos** sin abstracciones nuevas:
+
+- Unificar `ERROR,` → `ERROR:` (con dos puntos y un espacio: `"ERROR: ..."`).
+- Unificar `ADVERTENCIA,` y `ADVERTENCIA:` → `"ADVERTENCIA: ..."`.
+- Unificar `OK,` → `"OK: ..."`.
+- Corregir `"MODULO PENDIENTE,Actualizar pais."` para que tenga el mismo formato que las otras dos líneas hermanas.
+
+Si después de eso el equipo siente que tres prefijos repetidos son un problema, **recién ahí** considerar tres constantes simples al inicio de un módulo (no un módulo nuevo):
+
+```python
+PREFIJO_ERROR = "ERROR: "
+PREFIJO_ADVERTENCIA = "ADVERTENCIA: "
+PREFIJO_OK = "OK: "
+```
+
+### 11.6 Rama futura
+
+- **Unificación de prefijos** (alcance mínimo): `feature/csv-validations` (Paso 3), aprovechando que ahí ya se va a tocar el manejo de errores y se va a crear `validaciones.py`.
+- **Eventual extracción de 2–3 constantes** (si el equipo lo decide): misma rama, en el archivo donde se centralicen las validaciones.
+- **Módulo dedicado de textos**: **no se aborda**.
+
+### 11.7 Cómo explicárselo al compañero/a
+
+> "En Programación 1 no necesitamos un archivo de mensajes. Los strings de cada función están bien donde están porque se usan una sola vez. Lo único que sí queremos limpiar es que `ERROR`, `ADVERTENCIA`, `OK` y `MODULO PENDIENTE` estén escritos siempre con el mismo formato. Eso lo hacemos cuando toquemos el manejo de errores en la rama de validaciones, sin crear archivos nuevos."
+
 ---
 
 ## Resumen rápido
@@ -130,3 +210,4 @@
 | 8 | Rangos aceptan negativos | Calidad | Paso 3 o 5 |
 | 9 | `except Exception` amplio | Calidad | Paso 3 |
 | 10 | Reescritura completa del CSV al agregar | Aceptable | No se aborda |
+| 11 | Inconsistencia de prefijos de mensajes (`ERROR,` vs `ADVERTENCIA:`, etc.) | Calidad / UX | Paso 3 (unificación mínima, sin módulo nuevo) |
