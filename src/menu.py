@@ -6,6 +6,7 @@ from filtros import (
     filtrar_por_superficie
 )
 from ordenamientos import flujo_ordenar
+from estadisticas import mostrar_estadisticas
 
 
 def mostrar_menu():
@@ -65,7 +66,7 @@ def ejecutar_opcion(opcion, paises):
         flujo_ordenar(paises)
 
     elif opcion == "8":
-        print("\nMODULO PENDIENTE, Ver estadisticas.")
+        mostrar_estadisticas(paises)
 
     elif opcion == "0":
         print("\nPrograma finalizado.")
