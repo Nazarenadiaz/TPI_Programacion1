@@ -211,3 +211,60 @@ PREFIJO_OK = "OK: "
 | 9 | `except Exception` amplio | Calidad | Paso 3 |
 | 10 | Reescritura completa del CSV al agregar | Aceptable | No se aborda |
 | 11 | Inconsistencia de prefijos de mensajes (`ERROR,` vs `ADVERTENCIA:`, etc.) | Calidad / UX | Paso 3 (unificación mínima, sin módulo nuevo) |
+
+---
+
+## Mejoras a evaluar en Hito E
+
+> Sección añadida durante el Hito C (`feature/core-functionality`).
+> Lista corta de mejoras detectadas mientras se implementaban las opciones
+> 6 y 7. **No se aplican en este Hito**: solo quedan registradas para
+> evaluarlas en el Hito E (pulido y unificación). El criterio guía es
+> evitar overengineering para Programación 1.
+
+### M.E.1 Despacho del menú con un diccionario
+
+- **Módulo afectado:** `src/menu.py` (`ejecutar_opcion`).
+- **Observación:** `ejecutar_opcion` es una cadena larga de `if/elif` sobre la opción del usuario. Como los diccionarios son contenido del curso, se puede reemplazar por un mapa `{"1": agregar_pais, "2": buscar_pais, ...}` y un `dispatch[opcion](paises)`.
+- **Cuándo aplicarlo:** solo en Hito E. Antes no, porque las opciones 7 y 8 todavía estaban siendo implementadas y el `if/elif` permite mezclar firmas distintas (`paises = agregar_pais(paises)` vs `buscar_pais(paises)`).
+- **Riesgo de overengineering:** las funciones tienen firmas distintas (algunas devuelven `paises`, otras no). Si para evitar eso hay que envolver cada una en un lambda o crear adaptadores, **no vale la pena**: queda más confuso que el `if/elif` actual. Solo aplicar el refactor si se logra un dict simple sin envoltorios; si no, dejarlo como está.
+
+### M.E.2 Unificación de prefijos de mensajes
+
+- **Estado:** ya descripto en la sección **11.5**. Reafirmado en este Hito.
+- **Acciones concretas para Hito E:**
+  - `"ERROR,"` → `"ERROR: "` en `menu.py`, `csv_manager.py`, `paises.py`, `busquedas.py`, `filtros.py`, `ordenamientos.py`, `estadisticas.py` (cuando exista).
+  - `"ADVERTENCIA,"` → `"ADVERTENCIA: "` en `csv_manager.py`.
+  - `"OK,"` → `"OK: "` en `csv_manager.py` y `paises.py`.
+  - `"MODULO PENDIENTE,..."` queda obsoleto al implementar opción 8 en Hito D.
+- **Limitar el alcance:** solo cambiar los prefijos. **No** reformular el resto del mensaje.
+
+### M.E.3 ¿Constantes para textos repetidos del menú?
+
+- **Observación:** el separador `"=" * 45` aparece dos veces dentro de `mostrar_menu`. El título de los submenús (`"\n-Filtrar por continente-"`, `"\n-Buscar pais por nombre-"`, `"\n-Ordenar paises-"`, etc.) sigue un patrón.
+- **Recomendación:** **no extraer** a constantes. Cada texto se usa una sola vez en su función. Una constante de módulo agrega indirección sin reducir duplicación real.
+- **Excepción aceptable:** si se hace el refactor M.E.1, se puede usar una variable local `ANCHO = 45` dentro de `mostrar_menu` para no repetir el número. **No** crear una constante de módulo.
+
+### M.E.4 Lógica de validación duplicada residual
+
+- **Observación:** después del Hito B, `paises.py` ya usa `validaciones.py`, pero `filtros.py` todavía hace `int(input(...))` directamente en `filtrar_por_poblacion` y `filtrar_por_superficie`.
+- **Recomendación:** en Hito E, reemplazar esos `int(input(...))` por `pedir_entero` (o `pedir_entero_no_negativo`) y aplicar `validar_rango`. Es un cambio chico, sin nuevas funciones.
+- **No hacer:** introducir un wrapper genérico `pedir_rango(...)` solo para evitar tres líneas. Sigue siendo más simple llamar dos veces a `pedir_entero` y luego a `validar_rango`.
+
+### M.E.5 Qué debe quedar simple e inline
+
+- Los textos de las 9 opciones del menú.
+- Los títulos de submenús (`"-Ordenar paises-"`, `"Ordenar por:"`, `"Direccion:"`).
+- El submenú interno de `ordenamientos.py` (criterio + dirección): es lineal y se entiende leyendo de arriba a abajo. **No** convertirlo a tabla de mapeo.
+- El submenú de estadísticas (Hito D), si lo hay: misma regla.
+
+### M.E.6 Resumen para Hito E
+
+| Mejora | ¿Aplicar? | Riesgo |
+|---|---|---|
+| M.E.1 Dispatch con diccionario | **Solo si queda más simple**, sin lambdas/adaptadores | Overengineering |
+| M.E.2 Unificación de prefijos | Sí | Bajo |
+| M.E.3 Constantes para textos del menú | **No** (solo variable local del ancho si conviene) | Overengineering |
+| M.E.4 `pedir_entero` + `validar_rango` en filtros | Sí | Bajo |
+| M.E.5 Inline de submenús cortos | **No tocar** | — |
+

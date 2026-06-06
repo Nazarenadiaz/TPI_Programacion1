@@ -5,6 +5,7 @@ from filtros import (
     filtrar_por_poblacion,
     filtrar_por_superficie
 )
+from ordenamientos import flujo_ordenar
 
 
 def mostrar_menu():
@@ -61,7 +62,7 @@ def ejecutar_opcion(opcion, paises):
         paises = actualizar_pais(paises)
 
     elif opcion == "7":
-        print("\nMODULO PENDIENTE, Ordenar paises.")
+        flujo_ordenar(paises)
 
     elif opcion == "8":
         print("\nMODULO PENDIENTE, Ver estadisticas.")
