@@ -15,7 +15,7 @@ def pedir_texto_no_vacio(mensaje):
     texto = input(mensaje).strip()
 
     if not texto:
-        print("ERROR: El valor no puede estar vacio.")
+        print("ERROR: El valor no puede estar vacío.")
         return None
 
     return texto
@@ -32,7 +32,7 @@ def pedir_entero(mensaje):
     try:
         return int(entrada)
     except ValueError:
-        print("ERROR: Debes ingresar un numero entero.")
+        print("ERROR: Debés ingresar un número entero.")
         return None
 
 
@@ -68,7 +68,7 @@ def validar_rango(minimo, maximo):
         return False
 
     if minimo > maximo:
-        print("ERROR: El valor minimo no puede ser mayor al maximo.")
+        print("ERROR: El valor mínimo no puede ser mayor al máximo.")
         return False
 
     return True

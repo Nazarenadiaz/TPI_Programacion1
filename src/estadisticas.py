@@ -101,10 +101,10 @@ def mostrar_estadisticas(paises):
     Si la lista esta vacia, avisa al usuario y vuelve.
     """
 
-    print("\n-Estadisticas-")
+    print("\n-Estadísticas-")
 
     if not paises:
-        print("\nNo hay paises cargados. No se pueden calcular estadisticas.")
+        print("\nNo hay países cargados. No se pueden calcular estadísticas.")
         return
 
     mayor = pais_mayor_poblacion(paises)
@@ -113,22 +113,22 @@ def mostrar_estadisticas(paises):
     prom_sup = promedio_superficie(paises)
     conteo = cantidad_por_continente(paises)
 
-    print(f"\nTotal de paises: {len(paises)}")
+    print(f"\nTotal de países: {len(paises)}")
 
     print(
-        f"\nPais con mayor poblacion: "
+        f"\nPaís con mayor población: "
         f"{mayor['nombre']} ({mayor['poblacion']:,} habitantes)"
     )
 
     print(
-        f"Pais con menor poblacion: "
+        f"País con menor población: "
         f"{menor['nombre']} ({menor['poblacion']:,} habitantes)"
     )
 
-    print(f"\nPromedio de poblacion:  {prom_pob:,.2f} habitantes")
+    print(f"\nPromedio de población:  {prom_pob:,.2f} habitantes")
     print(f"Promedio de superficie: {prom_sup:,.2f} km²")
 
-    print("\nCantidad de paises por continente:")
+    print("\nCantidad de países por continente:")
 
     for continente in conteo:
         print(f"  {continente:<12} {conteo[continente]}")

@@ -16,24 +16,24 @@ def mostrar_paises(lista):
     """
 
     if not lista:
-        print("\nNo hay paises para mostrar.")
+        print("\nNo hay países para mostrar.")
         return
 
     print(
         f"\n{'Nombre':<20}"
-        f"{'Poblacion':>15}"
-        f"{'Superficie (km²)':>18}"
-        f"{'Continente':<15}"
+        f"{'Población':>15}  "
+        f"{'Superficie (km²)':>18}  "
+        f"{'Continente':<12}"
     )
 
-    print("-" * 72)
+    print("-" * 69)
 
     for pais in lista:
         print(
             f"{pais['nombre']:<20}"
-            f"{pais['poblacion']:>15,}"
-            f"{pais['superficie']:>18,}"
-            f"{pais['continente']:<15}"
+            f"{pais['poblacion']:>15,}  "
+            f"{pais['superficie']:>18,}  "
+            f"{pais['continente']:<12}"
         )
 
     print()
@@ -45,19 +45,19 @@ def agregar_pais(paises):
     a la lista si es correcto.
     """
 
-    print("\n-Agregar nuevo pais-")
+    print("\n-Agregar nuevo país-")
 
-    nombre = pedir_texto_no_vacio("Nombre del pais: ")
+    nombre = pedir_texto_no_vacio("Nombre del país: ")
 
     if nombre is None:
         return paises
 
     for pais in paises:
         if pais["nombre"].lower() == nombre.lower():
-            print(f"ERROR, Ya existe un pais llamado '{nombre}'.")
+            print(f"ERROR: Ya existe un país llamado '{nombre}'.")
             return paises
 
-    poblacion = pedir_entero_no_negativo("Poblacion: ")
+    poblacion = pedir_entero_no_negativo("Población: ")
 
     if poblacion is None:
         return paises
@@ -68,7 +68,7 @@ def agregar_pais(paises):
         return paises
 
     if superficie == 0:
-        print("ERROR, La superficie debe ser mayor a cero.")
+        print("ERROR: La superficie debe ser mayor a cero.")
         return paises
 
     continente = pedir_texto_no_vacio("Continente: ")
@@ -87,7 +87,7 @@ def agregar_pais(paises):
 
     guardar_paises(paises)
 
-    print(f"OK, Pais '{nombre}' agregado correctamente.")
+    print(f"OK: País '{nombre}' agregado correctamente.")
 
     return paises
 
@@ -98,9 +98,9 @@ def actualizar_pais(paises):
     y permite actualizar su poblacion y superficie.
     """
 
-    print("\n-Actualizar pais-")
+    print("\n-Actualizar país-")
 
-    nombre = pedir_texto_no_vacio("Nombre del pais a actualizar: ")
+    nombre = pedir_texto_no_vacio("Nombre del país a actualizar: ")
 
     if nombre is None:
         return paises
@@ -113,17 +113,17 @@ def actualizar_pais(paises):
             break
 
     if pais_encontrado is None:
-        print(f"ERROR, No se encontro un pais llamado '{nombre}'.")
+        print(f"ERROR: No se encontró un país llamado '{nombre}'.")
         return paises
 
     print(
         f"\nDatos actuales de '{pais_encontrado['nombre']}':"
     )
-    print(f"  Poblacion:  {pais_encontrado['poblacion']:,}")
+    print(f"  Población:  {pais_encontrado['poblacion']:,}")
     print(f"  Superficie: {pais_encontrado['superficie']:,} km²")
     print()
 
-    nueva_poblacion = pedir_entero_no_negativo("Nueva poblacion: ")
+    nueva_poblacion = pedir_entero_no_negativo("Nueva población: ")
 
     if nueva_poblacion is None:
         return paises
@@ -134,7 +134,7 @@ def actualizar_pais(paises):
         return paises
 
     if nueva_superficie == 0:
-        print("ERROR, La superficie debe ser mayor a cero.")
+        print("ERROR: La superficie debe ser mayor a cero.")
         return paises
 
     pais_encontrado["poblacion"] = nueva_poblacion
@@ -143,7 +143,7 @@ def actualizar_pais(paises):
     guardar_paises(paises)
 
     print(
-        f"OK, Pais '{pais_encontrado['nombre']}' "
+        f"OK: País '{pais_encontrado['nombre']}' "
         f"actualizado correctamente."
     )
 

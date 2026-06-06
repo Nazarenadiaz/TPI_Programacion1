@@ -66,10 +66,10 @@ def pedir_criterio_orden():
 
     print("\nOrdenar por:")
     print("1. Nombre")
-    print("2. Poblacion")
+    print("2. Población")
     print("3. Superficie")
 
-    opcion = input("Elegi un criterio: ").strip()
+    opcion = input("Elegí un criterio: ").strip()
 
     if opcion == "1":
         return "nombre"
@@ -80,7 +80,7 @@ def pedir_criterio_orden():
     if opcion == "3":
         return "superficie"
 
-    print("ERROR, Opcion de criterio invalida.")
+    print("ERROR: Opción de criterio inválida.")
     return None
 
 
@@ -91,11 +91,11 @@ def pedir_direccion():
     o None si la opcion es invalida.
     """
 
-    print("\nDireccion:")
+    print("\nDirección:")
     print("1. Ascendente")
     print("2. Descendente")
 
-    opcion = input("Elegi una direccion: ").strip()
+    opcion = input("Elegí una dirección: ").strip()
 
     if opcion == "1":
         return True
@@ -103,7 +103,7 @@ def pedir_direccion():
     if opcion == "2":
         return False
 
-    print("ERROR, Direccion invalida.")
+    print("ERROR: Dirección inválida.")
     return None
 
 
@@ -113,10 +113,10 @@ def flujo_ordenar(paises):
     direccion, ordena la lista y muestra el resultado.
     """
 
-    print("\n-Ordenar paises-")
+    print("\n-Ordenar países-")
 
     if not paises:
-        print("\nNo hay paises para ordenar.")
+        print("\nNo hay países para ordenar.")
         return
 
     criterio = pedir_criterio_orden()
@@ -133,8 +133,14 @@ def flujo_ordenar(paises):
 
     direccion_txt = "ascendente" if ascendente else "descendente"
 
+    etiquetas = {
+        "nombre": "nombre",
+        "poblacion": "población",
+        "superficie": "superficie"
+    }
+
     print(
-        f"\nPaises ordenados por {criterio} ({direccion_txt}):"
+        f"\nPaíses ordenados por {etiquetas[criterio]} ({direccion_txt}):"
     )
 
     mostrar_paises(resultado)

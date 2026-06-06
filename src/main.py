@@ -13,8 +13,8 @@ def main():
 
     if not paises:
         print(
-            "ADVERTENCIA: No se cargaron paises. "
-            "Verifica el archivo paises.csv."
+            "ADVERTENCIA: No se cargaron países. "
+            "Verificá el archivo paises.csv."
         )
 
     ejecutar_menu(paises)

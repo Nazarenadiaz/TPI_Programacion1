@@ -16,7 +16,7 @@ def cargar_paises(ruta=RUTA_CSV):
     paises = []
 
     if not os.path.exists(ruta):
-        print(f"ERROR, No se encontro el archivo '{ruta}'.")
+        print(f"ERROR: No se encontró el archivo '{ruta}'.")
         return paises
 
     try:
@@ -30,7 +30,7 @@ def cargar_paises(ruta=RUTA_CSV):
                     or not fila.get("superficie")
                     or not fila.get("continente")
                 ):
-                    print(f"ADVERTENCIA, Fila incompleta ignorada: {dict(fila)}")
+                    print(f"ADVERTENCIA: Fila incompleta ignorada: {dict(fila)}")
                     continue
 
                 try:
@@ -45,11 +45,11 @@ def cargar_paises(ruta=RUTA_CSV):
 
                 except ValueError:
                     print(
-                        f"ADVERTENCIA, Datos numericos invalidos: {dict(fila)}"
+                        f"ADVERTENCIA: Datos numéricos inválidos: {dict(fila)}"
                     )
 
-    except Exception as e:
-        print(f"ERROR, Al leer el archivo CSV: {e}")
+    except (OSError, csv.Error) as e:
+        print(f"ERROR: Al leer el archivo CSV: {e}")
 
     return paises
 
@@ -77,7 +77,5 @@ def guardar_paises(paises, ruta=RUTA_CSV):
             escritor.writeheader()
             escritor.writerows(paises)
 
-        print("OK, Datos guardados correctamente.")
-
-    except Exception as e:
-        print(f"ERROR, Al guardar el archivo CSV: {e}")
+    except OSError as e:
+        print(f"ERROR: Al guardar el archivo CSV: {e}")

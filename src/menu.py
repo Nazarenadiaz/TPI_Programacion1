@@ -15,16 +15,16 @@ def mostrar_menu():
     """
 
     print("\n" + "=" * 45)
-    print("      GESTION DE DATOS DE PAISES")
+    print("      GESTIÓN DE DATOS DE PAÍSES")
     print("=" * 45)
-    print("1. Agregar pais")
-    print("2. Buscar pais por nombre")
+    print("1. Agregar país")
+    print("2. Buscar país por nombre")
     print("3. Filtrar por continente")
-    print("4. Filtrar por rango de poblacion")
+    print("4. Filtrar por rango de población")
     print("5. Filtrar por rango de superficie")
-    print("6. Actualizar pais")
-    print("7. Ordenar paises")
-    print("8. Ver estadisticas")
+    print("6. Actualizar país")
+    print("7. Ordenar países")
+    print("8. Ver estadísticas")
     print("0. Salir")
     print("=" * 45)
 
@@ -34,7 +34,7 @@ def leer_opcion():
     Pide al usuario que elija una opcion del menu.
     """
 
-    return input("Elegi una opcion: ").strip()
+    return input("Elegí una opción: ").strip()
 
 
 def ejecutar_opcion(opcion, paises):
@@ -73,7 +73,7 @@ def ejecutar_opcion(opcion, paises):
         return paises, False
 
     else:
-        print("ERROR,Opcion invalida.")
+        print("ERROR: Opción inválida.")
 
     return paises, True
 
