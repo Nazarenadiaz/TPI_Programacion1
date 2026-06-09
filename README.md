@@ -74,5 +74,5 @@ Menú principal (`python3 src/main.py`):
 
 ## Integrantes
 
-- **Estudiante A:** Acosta Diaz Milagros Nazarena
-- **Estudiante B:** Herrera Marcos Ezequiel
+- **Estudiante :** Acosta Diaz Milagros Nazarena
+- **Estudiante :** Herrera Marcos Ezequiel
